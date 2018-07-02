@@ -1,13 +1,17 @@
-const mysql = require('mysql');
+const { Client, Pool } = require('pg');
 
-const dbConnection = mysql.createConnection({
-  user: 'root',
-  database: 'airbnc_data',
+// const { Pool, Client } = require('pg');
+// const pool = new Pool(conObject);
+const pgConnection = new Pool({
+  user: 'jonathanpizzolato',
+  host: 'localhost',
+  database: 'dev_airbnb_sdc',
+  password: 'devadmin',
+  port: 5432,
+  max: 100,
 });
+//max: 50,
 
-dbConnection.connect((err) => {
-  if (err) { throw err; }
-  console.log('mysql connected');
-});
-
-module.exports.dbConnection = dbConnection;
+module.exports = {
+  pgConnection,
+};

@@ -25,3 +25,6 @@ for (let i = 0; i < 1800; i += 1) {
 
   console.log(finalString);
 }
+
+// need a data loader to batch up the records and then send the write query to the db...JS will probably be able to load the data faster than the BD
+// so how to handle this, using AWAIT? which will slow it down a lot...need to run about 

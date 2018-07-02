@@ -1,16 +1,14 @@
-# AirBnC
+# Project Stratosphere
 
-> AirBnC is, as you might guess, a clone of AirBnB.  For this front-end focused project, each group member picked a single module from the website to re-create using their own code.  I chose the Reviews module.
-
-For this project, I: create and populate a MySQL database with fake review data; create a server in Node using Express with specific endpoints to serve up that data; build a React App that mimicks the Reviews module from the AirBnB website.
+> Project Stratosphere is, an Airbnb clone, scaled to reach 10K RPS (where the stratosphere begins). For this back-end focused project, each group member chose a pre-existing front-end module, with basic server and database configurations, to re-design and scale to 10K RPS.
 
 ## Related Projects
 
 These are the other modules my group members produced:
 
-  - https://github.com/airBnC/booking-module
-  - https://github.com/airBnC/property-info-module
-  - https://github.com/airBnC/calendar-module
+  - https://github.com/project-stratosphere/booking-module
+  - https://github.com/project-stratosphere/property-info-module
+
 
 ## Table of Contents
 

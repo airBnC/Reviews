@@ -1,0 +1,4 @@
+pg_ctl -D /Users/jonathanpizzolato/.postgres -l logfile start
+
+psql postgres //to get to the postgres shell
+devadmin

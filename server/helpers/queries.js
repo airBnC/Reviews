@@ -1,5 +1,4 @@
 const db = require('../../database/index.js');
-const mysql = require('mysql');
 const Promise = require('bluebird');
 
 module.exports.listingAverageStars = {
@@ -8,11 +7,15 @@ module.exports.listingAverageStars = {
       // Using prepared statements to protect against SQL Injection Attacks
       // See here: https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-prepared-statements.html
       // And here: https://github.com/mysqljs/mysql#preparing-queries
-      let starsQuery = 'SELECT rank_accuracy, rank_communication, rank_cleanliness, rank_location, rank_checkin, rank_value FROM ?? WHERE ?? = ?';
-      const inserts = ['review', 'listing_id', listingId];
-      starsQuery = mysql.format(starsQuery, inserts);
-
-      db.dbConnection.query(starsQuery, (err, result) => {
+      // const sql = `SELECT AVG(rank_accuracy) as rank_accuracy, AVG(rank_communication) as rank_communication, 
+      //            AVG(rank_cleanliness) as rank_cleanliness, AVG(rank_location) as rank_location, 
+      //            AVG(rank_checkin) as rank_checkin, AVG(rank_value) as rank_value 
+      //            FROM tbl_reviews WHERE listing_id = $1`;
+      const sql = `SELECT AVG(rank_accuracy) as rank_accuracy, AVG(rank_communication) as rank_communication, 
+      AVG(rank_cleanliness) as rank_cleanliness, AVG(rank_location) as rank_location, 
+      AVG(rank_checkin) as rank_checkin, AVG(rank_value) as rank_value 
+      FROM mvw_reviews_50m WHERE listing_id = ${listingId}`;
+      db.pgConnection.query(sql, (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -26,11 +29,70 @@ module.exports.listingAverageStars = {
 module.exports.listingReviews = {
   get: (listingId) => {
     return new Promise((resolve, reject) => {
-      let reviewsQuery = 'SELECT review_date, review_text, user.first_name, user.last_name FROM ?? INNER JOIN ?? ON ?? = ?? WHERE ?? = ?';
-      const inserts = ['review', 'user', 'user.user_id', 'review.user_id', 'listing_id', listingId];
-      reviewsQuery = mysql.format(reviewsQuery, inserts);
+      // const sql = {
+      //   name: 'fetch-reviews',
+      //   text: `SELECT r.review_date, r.review_text, r.first_name 
+      //         FROM tbl_reviews as r 
+      //         WHERE listing_id = $1`,
+      //   values: [listingId],
+      // };
+      let sql = `SELECT r.review_date, r.review_text, r.first_name, 
+      r.rank_accuracy, r.rank_communication, r.rank_cleanliness, r.rank_location, r.rank_checkin, r.rank_value
+      FROM mvw_reviews_50m as r WHERE listing_id = ${listingId}`
+      db.pgConnection.query(sql, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  },
+  post: (review) => {
+    return new Promise((resolve, reject) => {
+      const sql = 'INSERT INTO master_reviews (listing_id, user_id, first_name, review_date, review_text, rank_accuracy, rank_communication, rank_cleanliness, rank_location, rank_checkin, rank_value) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)';
+      const listingId = review.listingId;
+      const userId = review.userId;
+      const firstName = review.firstName || 'Anonymous';
+      const reviewDate = review.reviewDate || new Date();
+      const reviewText = review.reviewText || '';
+      const rankAccuracy = review.rankAccuracy || 0;
+      const rankCommunication = review.rankCommunication || 0;
+      const rankCleanliness = review.rankCleanliness || 0;
+      const rankLocation = review.rankLocation || 0;
+      const rankCheckin = review.rankCheckin || 0;
+      const rankValue = review.rankValue || 0;
+      const inserts = [listingId, userId, firstName, reviewDate, reviewText, rankAccuracy, rankCommunication, rankCleanliness, rankLocation, rankCheckin, rankValue];
 
-      db.dbConnection.query(reviewsQuery, (err, result) => {
+      db.pgConnection.query(sql, inserts, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  },
+  put: (review) => {
+    return new Promise((resolve, reject) => {
+      const sql = 'SELECT "UPDATE STATEMENT RAN";'; // Just putting in a dummy query in place of an update
+
+      db.pgConnection.query(sql, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  },
+  delete: (review) => {
+    return new Promise((resolve, reject) => {
+      const sql = 'DELETE FROM master_reviews WHERE id = $1;';
+      const reviewId = review.reviewId || null;
+      const inserts = [reviewId];
+
+      db.pgConnection.query(sql, inserts, (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -40,6 +102,7 @@ module.exports.listingReviews = {
     });
   },
 };
+
 
 module.exports.listings = {
   getTotal: () => {
