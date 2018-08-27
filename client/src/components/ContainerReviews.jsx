@@ -7,7 +7,7 @@ import { BasicWrapperFlexColumnDiv } from './styles/MasterStyles.styles';
 
 const ContainerReviews = props => (
   <BasicWrapperFlexColumnDiv>
-    {props.reviews.map(review => <ReviewEntry key={review.key} review={review} />)}
+    {props.reviews.map(review => <ReviewEntry key={review.review_id} review={review} />)}
   </BasicWrapperFlexColumnDiv>
 );
 

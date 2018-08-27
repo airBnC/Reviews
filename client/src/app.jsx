@@ -11,7 +11,7 @@ import {
   AppInnerWrapper,
 } from './App.styles';
 
-import { BasicTextFormatSpan } from './components/styles/MasterStyles.styles';
+import { BasicTextFormatSpan, BasicWrapperFlexColumnDivCentered } from './components/styles/MasterStyles.styles';
 
 class App extends React.Component {
   constructor(props) {
@@ -102,9 +102,14 @@ class App extends React.Component {
       <AppOuterWrapper>
         {this.state.err404 ?
           (
-            <BasicTextFormatSpan>
-              <h1> Sorry, that listing does not exist </h1>
-            </BasicTextFormatSpan>
+            <BasicWrapperFlexColumnDivCentered>
+              <BasicTextFormatSpan>
+                <h1> Sorry, that listing does not exist </h1>
+              </BasicTextFormatSpan>
+              <BasicTextFormatSpan>
+                <h4> Try a listing number between 1 and 100 </h4>
+              </BasicTextFormatSpan>
+            </BasicWrapperFlexColumnDivCentered>
           ) : (
             <AppInnerWrapper>
               <ContainerAverageStars
