@@ -7,6 +7,12 @@ export const BasicWrapperFlexColumnDiv = styled.div`
   flex-direction: column;
 `;
 
+export const BasicWrapperFlexColumnDivCentered = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const BasicWrapperFlexRowDiv = styled.div`
   display: flex;
   flex-direction: row;
