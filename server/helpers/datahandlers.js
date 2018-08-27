@@ -72,12 +72,9 @@ const convertDateToMonthYYYY = (trimmedDate) => {
 
 module.exports.processReviewsArray = (reviewsArray) => {
   const reviewsArrayCopy = reviewsArray.slice();
-  let counter = 0;
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
   reviewsArrayCopy.forEach((review) => {
     review.review_date = convertDateToMonthYYYY(review.review_date.toLocaleDateString('en-US', options));
-    review.key = counter;
-    counter += 1;
   });
   return reviewsArrayCopy;
 };

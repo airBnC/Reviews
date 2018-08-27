@@ -26,7 +26,7 @@ module.exports.listingAverageStars = {
 module.exports.listingReviews = {
   get: (listingId) => {
     return new Promise((resolve, reject) => {
-      let reviewsQuery = 'SELECT review_date, review_text, user.first_name, user.last_name FROM ?? INNER JOIN ?? ON ?? = ?? WHERE ?? = ?';
+      let reviewsQuery = 'SELECT review_id, review_date, review_text, user.first_name, user.last_name FROM ?? INNER JOIN ?? ON ?? = ?? WHERE ?? = ?';
       const inserts = ['review', 'user', 'user.user_id', 'review.user_id', 'listing_id', listingId];
       reviewsQuery = mysql.format(reviewsQuery, inserts);
 
