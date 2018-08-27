@@ -2,8 +2,12 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 
-const dbQueries = require('./helpers/queries.js');
-const dataHandlers = require('./helpers/datahandlers.js');
+const {
+  listings,
+  listingAverageStars,
+  listingReviews,
+} = require('./helpers/queries.js');
+const { checkForValidRecord } = require('./helpers/datahandlers.js');
 
 const port = process.env.PORT || 3004;
 
@@ -22,8 +26,8 @@ app.use('/rooms/:id', express.static(path.join(__dirname, '../client/dist')));
 app.get('/api/listings/:id/reviews', (req, res) => {
   const listingId = req.params.id.replace(/\D/g, '');
 
-  if (dataHandlers.checkForValidRecord(listingId, dbQueries.listings.getTotal())) {
-    dbQueries.listingReviews.get(listingId)
+  if (checkForValidRecord(listingId, listings.getTotal())) {
+    listingReviews.get(listingId)
       .then((data) => {
         res.status(200).send(JSON.stringify(data));
       })
@@ -38,8 +42,8 @@ app.get('/api/listings/:id/reviews', (req, res) => {
 app.get('/api/listings/:id/averagestars', (req, res) => {
   const listingId = req.params.id.replace(/\D/g, '');
 
-  if (dataHandlers.checkForValidRecord(listingId, dbQueries.listings.getTotal())) {
-    dbQueries.listingAverageStars.get(listingId)
+  if (checkForValidRecord(listingId, listings.getTotal())) {
+    listingAverageStars.get(listingId)
       .then((data) => {
         res.status(200).send(JSON.stringify(data[0]));
       })
