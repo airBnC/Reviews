@@ -25,8 +25,7 @@ app.get('/api/listings/:id/reviews', (req, res) => {
   if (dataHandlers.checkForValidRecord(listingId, dbQueries.listings.getTotal())) {
     dbQueries.listingReviews.get(listingId)
       .then((data) => {
-        const formattedReviews = dataHandlers.processReviewsArray(data);
-        res.status(200).send(JSON.stringify(formattedReviews));
+        res.status(200).send(JSON.stringify(data));
       })
       .catch((error) => {
         res.status(500).send(JSON.stringify(error));
