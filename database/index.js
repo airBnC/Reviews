@@ -1,8 +1,10 @@
 const mysql = require('mysql');
 
 const dbConnection = mysql.createConnection({
+  host: 'localhost',
   user: 'root',
-  database: 'airbnc_data',
+  password: '',
+  database: 'airbnc_reviews_module_data',
 });
 
 dbConnection.connect((err) => {

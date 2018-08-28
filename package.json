@@ -8,12 +8,12 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "deploy": "npm run load-data && npm run build & npm run start",
-    "build": "webpack",
+    "deploy": "npm run build & npm run start",
+    "build": "webpack --mode production",
     "build-dev": "webpack --mode development --watch",
     "start": "node server/server.js",
     "start-dev": "nodemon server/server.js",
-    "load-data": "mysql -u root --local-infile < database/schema.sql",
+    "load-data": "mysql -u root -p --local-infile < database/schema.sql",
     "test": "jest"
   },
   "dependencies": {
