@@ -1,13 +1,15 @@
 const mysql = require('mysql');
 
 const dbConnection = mysql.createConnection({
+  host: 'localhost',
   user: 'root',
-  database: 'airbnc_data',
+  password: '',
+  database: 'airbnc_reviews_module_data',
 });
 
 dbConnection.connect((err) => {
   if (err) { throw err; }
-  console.log('mysql connected');
+  console.log('Mysql successfully connected.');
 });
 
 module.exports.dbConnection = dbConnection;

@@ -1,10 +1,10 @@
 -- //https://dev.mysql.com/doc/refman/5.7/en/
 
-DROP DATABASE IF EXISTS airbnc_data;
+DROP DATABASE IF EXISTS airbnc_reviews_module_data;
 
-CREATE DATABASE airbnc_data;
+CREATE DATABASE airbnc_reviews_module_data;
 
-USE airbnc_data;
+USE airbnc_reviews_module_data;
 
 CREATE TABLE user (
   user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
