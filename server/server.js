@@ -59,4 +59,4 @@ app.get('*', (req, res) => {
   res.status(404).send('Sorry, that page was not found!  Try the following pathname: /rooms/{id} where id is between 1 - 100');
 });
 
-app.listen(3004, () => console.log('App listening on port ', port));
+app.listen(port, () => console.log('App listening on port ', port));
