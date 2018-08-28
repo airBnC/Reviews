@@ -13,7 +13,7 @@ For this project, I:
 Make sure you have MySQL installed locally.
 
 Make sure your local instance of MySQL is *not* version ^8.0.4 or later.
-- This code makes use of the MySQL node module, which has issues with ^8.0.4
+- This code makes use of the MySQL node module, which has issues with ^8.0.4.
 - See here: https://github.com/mysqljs/mysql/pull/1962	
 - If you do use ^8.0.4+, you will likely get an error: `Error: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client`.  Try the following command in your MySQL shell: `ALTER USER root@localhost IDENTIFIED WITH mysql_native_password BY '';` (replace `root` with your super user) and see if that resolves the issue.
 	
@@ -33,7 +33,7 @@ npm run load-data
 npm run deploy
 ```
 
-And finally, navigate to `http://localhost:3004/rooms/1/`
+And finally, navigate to `http://localhost:3004/rooms/1/`.  Try IDs between 1 - 100.
 
 When you're done looking around, feel free to drop the airbnc_reviews_module_data database and turn local_infile back off!
 
